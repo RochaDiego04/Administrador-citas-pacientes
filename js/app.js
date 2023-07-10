@@ -8,7 +8,7 @@ const sintomasInput  = document.querySelector('#sintomas');
 
 // UI
 const formulario = document.querySelector('#nueva-cita');
-const listadoCitas = document.querySelector('#listado-citas');
+const listadoCitas = document.querySelector('#citas');
 
 class Citas {
     constructor() {
@@ -17,7 +17,6 @@ class Citas {
 
     agregarCita(cita) {
         this.citas = [...this.citas, cita];
-        console.log(this.citas);
     }
 }
 
@@ -45,6 +44,63 @@ class UI {
         setTimeout(() => {
             divMensaje.remove();
         }, 2500);
+    }
+
+    imprimirCitas(objAdministrarCitas) {
+        
+        const { citas } = objAdministrarCitas; // Obtener arreglo del objeto con destructuring
+        
+        this.limpiarHTML();
+        
+        citas.forEach( cita => {
+            const { mascota, propietario, telefono, fecha, hora, sintomas, id } = cita;
+            const divCita = document.createElement('DIV');
+            divCita.classList.add('cita', 'p-3');
+            divCita.dataset.id = id;
+
+            // Scripting de los elementos de la cita
+            const mascotaParrafo = document.createElement('H2');
+            mascotaParrafo.classList.add('card-title', 'font-weight-bolder');
+            mascotaParrafo.textContent = mascota;
+
+            const propietarioParrafo = document.createElement('P');
+            propietarioParrafo.innerHTML = `
+                <span class="font-weight-bolder"> Propietario: </span>${propietario}
+            `;
+            const telefonoParrafo = document.createElement('P');
+            telefonoParrafo.innerHTML = `
+                <span class="font-weight-bolder"> Teléfono: </span>${telefono}
+            `;
+            const fechaParrafo = document.createElement('P');
+            fechaParrafo.innerHTML = `
+                <span class="font-weight-bolder"> Fecha: </span>${fecha}
+            `;
+            const horaParrafo = document.createElement('P');
+            horaParrafo.innerHTML = `
+                <span class="font-weight-bolder"> Hora: </span>${hora}
+            `;
+            const sintomasParrafo = document.createElement('P');
+            sintomasParrafo.innerHTML = `
+                <span class="font-weight-bolder"> Síntomas: </span>${sintomas}
+            `;
+
+            // Agregar los parrafos al divCita
+            divCita.appendChild(mascotaParrafo);
+            divCita.appendChild(propietarioParrafo);
+            divCita.appendChild(telefonoParrafo);
+            divCita.appendChild(fechaParrafo);
+            divCita.appendChild(horaParrafo);
+            divCita.appendChild(sintomasParrafo);
+
+            // Agregar al HTML
+            listadoCitas.appendChild(divCita);
+        });
+    }
+
+    limpiarHTML() {
+        while(listadoCitas.firstChild) {
+            listadoCitas.removeChild(listadoCitas.firstChild);
+        }
     }
 }
 
@@ -102,6 +158,8 @@ function nuevaCita(e) {
 
     // Limpiar campos del formulario
     formulario.reset();
+
+    ui.imprimirCitas(administrarCitas);
 }
 
 function reiniciarObjeto() {
