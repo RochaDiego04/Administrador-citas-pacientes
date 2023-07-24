@@ -11,8 +11,8 @@ import {
     formulario
 } from './selectores.js';
 
-const ui = new UI();
 const administrarCitas = new Citas();
+const ui = new UI(administrarCitas);
 
 let editando;
 
