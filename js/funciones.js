@@ -38,6 +38,8 @@ function crearDB() {
         console.log('Base de datos creada');
 
         DB = crearDB.result;
+        // mostrar citas en el HTML cuando indexDB está listo
+        ui.imprimirCitas(); 
     };
 
     // Definir el schema
@@ -132,7 +134,7 @@ export function nuevaCita(e) {
     // Limpiar campos del formulario
     formulario.reset();
 
-    ui.imprimirCitas(administrarCitas);
+    ui.imprimirCitas();
 }
 
 export function reiniciarObjeto() {
@@ -152,7 +154,7 @@ export function eliminarCita(id) {
     ui.imprimirAlerta('La cita se eliminó correctamente');
 
     // Refrescar citas
-    ui.imprimirCitas(administrarCitas);
+    ui.imprimirCitas();
 }
 
 // Carga los datos y el modo edición
