@@ -1,6 +1,5 @@
 import Citas from './classes/Citas.js';
 import UI from './classes/UI.js';
-
 import { 
     mascotaInput, 
     propietarioInput, 
@@ -15,6 +14,55 @@ const administrarCitas = new Citas();
 const ui = new UI(administrarCitas);
 
 let editando;
+
+/******************************** BD ************/
+export let DB;
+
+export function baseDatos() {
+    window.onload = () => {
+        crearDB();
+    }
+}
+
+function crearDB() {
+    // Crear base de datos version 1.0
+    const crearDB = window.indexedDB.open('citas',1);
+
+    // Si hay error
+    crearDB.onerror = function(){
+        console.log('Hubo un error');
+    };
+
+    // Si sale todo bien
+    crearDB.onsuccess = function(){
+        console.log('Base de datos creada');
+
+        DB = crearDB.result;
+    };
+
+    // Definir el schema
+    crearDB.onupgradeneeded = function(e){
+        const db = e.target.result;
+        const objectStore = db.createObjectStore('citas', {
+            keyPath: 'id',
+            autoIncrement: true
+        });
+
+        // Definir las columnas
+        objectStore.createIndex('mascota','mascota', {unique: false});
+        objectStore.createIndex('propietario','propietario', {unique: false});
+        objectStore.createIndex('telefono','telefono', {unique: false});
+        objectStore.createIndex('fecha','fecha', {unique: false});
+        objectStore.createIndex('hora','hora', {unique: false});
+        objectStore.createIndex('sintomas','sintomas', {unique: false});
+        objectStore.createIndex('id','id', {unique: true});
+
+        console.log('Database creada y lista');
+    }
+}
+
+/******************************** FIN DE BD ************/
+
 
 const citaObj = { // Necesitan la propiedad name='' en el HTML.
     mascota: '',
