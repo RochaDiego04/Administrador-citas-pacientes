@@ -18,7 +18,7 @@ Este proyecto es un administrador de pacientes de una veterinaria, desarrollado 
 
 - HTML: se utiliza para estructurar la página y definir los elementos del formulario y la lista de citas.
 - CSS (Bootstrap): se utiliza para aplicar estilos a la página y asegurar una apariencia atractiva y coherente.
-- JavaScript: se utiliza para la funcionalidad interactiva del formulario y las citas, incluyendo la creación, edición y eliminación de citas, así como la manipulación de la interfaz de usuario.
+- JavaScript: se utiliza para la funcionalidad interactiva del formulario y las citas, incluyendo la creación, edición y eliminación de citas, así como la manipulación de la interfaz de usuario. Las citas se almacenan utilizando la API de indexedDB
 
 ## Instalación y uso
 
