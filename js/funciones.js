@@ -94,14 +94,26 @@ export function nuevaCita(e) {
     }
 
     if(editando){
-        ui.imprimirAlerta('Editado correctamente');
-
         // Pasar el objeto de la cita a edición
         administrarCitas.editarCita({...citaObj});
+
+        // Edita en indexDB
+        const transaction = DB.transaction(['citas'],'readwrite');
+        const objectStore = transaction.objectStore('citas');
+
+        objectStore.put(citaObj);
+
+        transaction.oncomplete = () => {
+            ui.imprimirAlerta('Editado correctamente');
         
-        // Regresar texto del boton a su estado original
-        formulario.querySelector('button[type="submit"]').textContent = 'Crear Cita';
-        editando = false;
+            // Regresar texto del boton a su estado original
+            formulario.querySelector('button[type="submit"]').textContent = 'Crear Cita';
+            editando = false;
+        }
+
+        transaction.onerror = () => {
+            console.log('Hubo un error');
+        }
     }
     else {
         // Nuevo Registro
