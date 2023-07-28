@@ -1,4 +1,4 @@
-import { datosCita, nuevaCita } from '../funciones.js'
+import { datosCita, nuevaCita, baseDatos } from '../funciones.js'
 
 import { 
     mascotaInput, 
@@ -17,6 +17,8 @@ class App {
     }
 
     initApp(){
+        baseDatos();
+
         mascotaInput.addEventListener('input', datosCita);
         propietarioInput.addEventListener('input', datosCita);
         telefonoInput.addEventListener('input', datosCita);
